@@ -3,12 +3,12 @@ import db from "../db/connection.js";
 
 // Get all categories with pagination
 const fetchAllCategories = (req, res) => {
-  // Get page and pageSize from query parameters, default to 1 and 10 respectively
+  
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
   const offset = (page - 1) * pageSize;
 
-  // Query to fetch categories with pagination
+
   const query = "SELECT * FROM categories LIMIT ?, ?";
 
   db.query(query, [offset, pageSize], (err, results) => {
@@ -45,9 +45,9 @@ const addNewCategory = (req, res) => {
   db.query(query, [category_name], (err, results) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ error: "Error adding category" }); // Send JSON on error
+      res.status(500).json({ error: "Error adding category" }); 
     } else {
-      res.status(201).json({ message: "Category added successfully" }); // Send JSON on success
+      res.status(201).json({ message: "Category added successfully" }); 
     }
   });
 };
@@ -64,7 +64,7 @@ const updateCategory = (req, res) => {
     } else if (results.affectedRows === 0) {
       res.status(404).json({ error: "Category not found" }); // Handle not found case
     } else {
-      res.status(200).json({ message: "Category updated successfully" }); // Send success as JSON
+      res.status(200).json({ message: "Category updated successfully" }); 
     }
   });
 };
@@ -76,11 +76,11 @@ const deleteCategory = (req, res) => {
   db.query(query, [req.params.id], (err, results) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ error: "Error deleting category" }); // Send error as JSON
+      res.status(500).json({ error: "Error deleting category" }); 
     } else if (results.affectedRows === 0) {
-      res.status(404).json({ error: "Category not found" }); // Handle not found case
+      res.status(404).json({ error: "Category not found" }); 
     } else {
-      res.status(200).json({ message: "Category deleted successfully" }); // Send success as JSON
+      res.status(200).json({ message: "Category deleted successfully" }); 
     }
   });
 };

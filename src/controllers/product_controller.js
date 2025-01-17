@@ -2,7 +2,6 @@ import db from "../db/connection.js";
 
 // Get all products with pagination
 const fetchAllProducts = (req, res) => {
-  // Get page and pageSize from query parameters, default to 1 and 10 respectively
   const page = parseInt(req.query.page) || 1;
   const pageSize = parseInt(req.query.pageSize) || 10;
   const offset = (page - 1) * pageSize;
@@ -49,7 +48,8 @@ JOIN categories c ON p.category_id = c.category_id where p.product_id = ? ;`;
 const addNewProduct = (req, res) => {
   const { product_name, category_id } = req.body;
   console.log(req.body); // Log the incoming request body for debugging
-  const query = "INSERT INTO products (product_name, category_id) VALUES (?, ?)";
+  const query =
+    "INSERT INTO products (product_name, category_id) VALUES (?, ?)";
 
   db.query(query, [product_name, category_id], (err, results) => {
     if (err) {
@@ -90,11 +90,11 @@ const deleteProduct = (req, res) => {
   db.query(query, [req.params.id], (err, results) => {
     if (err) {
       console.error(err);
-      res.status(500).json({ error: "Error deleting product" }); // Send JSON response with error
+      res.status(500).json({ error: "Error deleting product" });
     } else if (results.affectedRows === 0) {
-      res.status(404).json({ message: "Product not found" }); // Send JSON response with message
+      res.status(404).json({ message: "Product not found" });
     } else {
-      res.status(200).json({ message: "Product deleted successfully" }); // Send JSON response with success message
+      res.status(200).json({ message: "Product deleted successfully" });
     }
   });
 };
